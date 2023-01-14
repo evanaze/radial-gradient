@@ -11,6 +11,8 @@ packages = [{include = "radial_gradient"}]
 python = "^3.11"
 uvicorn = "^0.20.0"
 fastapi = "^0.89.1"
+pydantic = "^1.10.4"
+sqlalchemy = "^1.4.46"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.12.0"
