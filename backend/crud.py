@@ -1,7 +1,7 @@
 """Simple CRUD operations."""
 from sqlalchemy.orm import Session
 
-from backend import models, schemas
+import models, schemas
 
 
 def update_post_like(db: Session, response: schemas.ResponseModel):

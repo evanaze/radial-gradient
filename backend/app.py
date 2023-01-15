@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from backend import schemas, crud
+import schemas, crud
 
 app = FastAPI()
 
