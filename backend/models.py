@@ -9,5 +9,6 @@ class Posts(Base):
 
     __tablename__ = "posts"
     id = Column(Integer, primary_key=True, index=True)
+    username = Column(String)
     content = Column(String)
     liked = Column(Boolean, nullable=True)
