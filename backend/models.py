@@ -4,7 +4,7 @@ from sqlalchemy import Boolean, Column, Integer, String
 from database import Base
 
 
-class Posts(Base):
+class Post(Base):
     """The posts table."""
 
     __tablename__ = "posts"

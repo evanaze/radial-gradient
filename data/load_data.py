@@ -1,8 +1,6 @@
 """Load data into the database."""
 import csv
 
-from sqlalchemy.orm import Session
-
 
 def read_csv():
     """Read the data.csv file."""
@@ -15,7 +13,7 @@ def read_csv():
     return csvdata
 
 
-def load_data(db: Session):
+def load_data():
     """Load the data."""
     data = read_csv()
     for tweet in data:

@@ -160,5 +160,4 @@ cython_debug/
 #.idea/
 
 .ruff_cache
-backend/data/*
-!backend/data/.gitkeep
+data/data.csv
