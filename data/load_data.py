@@ -1,10 +1,13 @@
 """Load data into the database."""
 import csv
 
+import click
+import requests
+
 
 def read_csv():
     """Read the data.csv file."""
-    with open("data/data.csv", "r") as infile:
+    with open("data.csv", "r") as infile:
         csvreader = csv.reader(infile)
 
         csvdata = []
@@ -13,9 +16,18 @@ def read_csv():
     return csvdata
 
 
-def load_data():
-    """Load the data."""
+@click.command()
+@click.option(
+    "-i",
+    "--ip-address",
+)
+def load_data_db(ip_address: str):
+    """Load the data into the database."""
     data = read_csv()
-    for tweet in data:
-        user = tweet[-1]
-        content = tweet[2]
+    posts = [{"username": post[-1], "content": post[2]} for post in data]
+    for post in posts:
+        requests.post(f"http://{ip_address}/create_post", data=post)
+
+
+if __name__ == "__main__":
+    load_data_db()

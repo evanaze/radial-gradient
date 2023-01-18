@@ -11,6 +11,7 @@ class ResponseModel(BaseModel):
 
 class PostModel(ResponseModel):
     content: str
+    username: str
 
     class Config:
         orm_mode = True

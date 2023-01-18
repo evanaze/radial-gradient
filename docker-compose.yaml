@@ -2,15 +2,23 @@ version: "3"
 services:
   backend:
     build: ./backend
+    container_name: backend_api
     ports:
       - "80:80"
+    networks:
+      radial-backend:
+        ipv4_address: 172.29.1.1
     env_file:
       - config.env
 
   database:
     image: postgres:latest
+    container_name: database
     ports:
       - "5432:5432"
+    networks:
+      radial-backend:
+        ipv4_address: 172.29.1.0
     volumes:
       - pgdata:/var/lib/postgresql/data
     env_file:
@@ -18,3 +26,11 @@ services:
 
 volumes:
   pgdata:
+
+
+networks:
+  radial-backend:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.0.0/16
