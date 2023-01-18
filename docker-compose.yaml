@@ -10,6 +10,9 @@ services:
         ipv4_address: 172.29.1.1
     env_file:
       - config.env
+    depends_on:
+      database:
+        condition: service_healthy
 
   database:
     image: postgres:latest
@@ -23,6 +26,11 @@ services:
       - pgdata:/var/lib/postgresql/data
     env_file:
       - config.env
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin -d admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   pgdata:
