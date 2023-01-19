@@ -1,18 +1,25 @@
 import './App.css';
+import { LikeButton, DislikeButton } from './Buttons.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+const Content = class {
+  constructor(username, text) {
+    this.username = username;
+    this.text = text;
+  }
+}
 
 function App() {
   return (
     <div class="container">
-
       <div class="card">
         <div class="card-body text-center">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+          <h5 class="card-title">Username</h5>
           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
             content.</p>
-          <a href="#" class="card-link">👍</a>
-          <a href="#" class="card-link">👎</a>
+          <LikeButton />
+          <DislikeButton />
         </div>
       </div>
     </div>
