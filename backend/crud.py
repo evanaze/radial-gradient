@@ -7,6 +7,7 @@ import models
 import schemas
 
 LOGGER = getLogger(__name__)
+LOGGER.setLevel("INFO")
 
 
 def create_post(db: Session, post: schemas.ContentModel):

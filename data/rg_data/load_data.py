@@ -7,6 +7,7 @@ import click
 import requests
 
 LOGGER = getLogger(__name__)
+LOGGER.setLevel("INFO")
 
 
 def read_csv():
@@ -32,10 +33,7 @@ def assign_likes(posts: list[dict]):
 
 
 @click.command()
-@click.option(
-    "-i",
-    "--ip-address",
-)
+@click.option("-i", "--ip-address", help="The IP address to send posts to.", required=True)
 def load_data_db(ip_address: str):
     """Load the data into the database."""
     data = read_csv()

@@ -1,8 +1,8 @@
 version: "3"
 services:
-  backend:
+  rg-backend:
     build: ./backend
-    container_name: backend_api
+    container_name: rg-backend-api
     ports:
       - "80:80"
     networks:
@@ -11,12 +11,12 @@ services:
     env_file:
       - config.env
     depends_on:
-      database:
+      rg-database:
         condition: service_healthy
 
-  database:
+  rg-database:
     image: postgres:latest
-    container_name: database
+    container_name: rg-database
     ports:
       - "5432:5432"
     networks:
