@@ -1,13 +1,12 @@
 """Load data into the database."""
 import csv
 import random
-from logging import getLogger
+import logging
 
 import click
 import requests
 
-LOGGER = getLogger(__name__)
-LOGGER.setLevel("INFO")
+logging.basicConfig(level=logging.DEBUG)
 
 
 def read_csv():
@@ -42,7 +41,7 @@ def load_data_db(ip_address: str):
     posts = assign_likes(posts)
 
     for post in posts:
-        LOGGER.info("Writing post %s", post)
+        logging.info("Writing post %s", post)
         requests.post(f"http://{ip_address}:80/create_post", json=post)
 
 

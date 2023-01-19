@@ -28,9 +28,9 @@ services:
       - config.env
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U admin -d admin" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 1s
+      timeout: 1s
+      retries: 10
 
 volumes:
   pgdata:

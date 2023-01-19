@@ -17,8 +17,8 @@ def get_db():
         db.close()
 
 
-@app.post("/create_post")
-def create_post(post: schemas.PostModel, db: Session = Depends(get_db)):
+@app.post("/create_post", response_model=schemas.PostModel)
+def create_post(post: schemas.ContentModel, db: Session = Depends(get_db)):
     """Create a post in the database."""
     return crud.create_post(db, post)
 
