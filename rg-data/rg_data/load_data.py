@@ -43,7 +43,7 @@ def load_data_db(ip_address: str):
 
     for post in posts:
         LOGGER.info("Writing post %s", post)
-        requests.post(f"http://{ip_address}:80/create_post", data=post)
+        requests.post(f"http://{ip_address}:80/create_post", json=post)
 
 
 if __name__ == "__main__":

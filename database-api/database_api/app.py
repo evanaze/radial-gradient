@@ -2,10 +2,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
-import crud
-import schemas
-import models
-import database
+from database_api import crud, schemas, models, database
 
 app = FastAPI()
 
@@ -21,12 +18,12 @@ def get_db():
 
 
 @app.post("/create_post")
-def create_post(response: schemas.PostModel, db: Session = Depends(get_db)):
+def create_post(post: schemas.PostModel, db: Session = Depends(get_db)):
     """Create a post in the database."""
-    return crud.create_post(db, response)
+    return crud.create_post(db, post)
 
 
 @app.post("/response")
-def record_response(response: schemas.ResponseModel, db: Session = Depends(get_db)):
+def record_response(post: schemas.ResponseModel, db: Session = Depends(get_db)):
     """Record a response to the database."""
-    return crud.update_post_like(db, response)
+    return crud.update_post_like(db, post)

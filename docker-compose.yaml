@@ -1,7 +1,7 @@
 version: "3"
 services:
   rg-backend:
-    build: ./backend
+    build: database-api
     container_name: rg-backend-api
     ports:
       - "80:80"

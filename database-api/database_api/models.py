@@ -1,7 +1,7 @@
 """Database models."""
 from sqlalchemy import Boolean, Column, Integer, String, Identity
 
-from database import Base
+from database_api.database import Base
 
 
 class Post(Base):

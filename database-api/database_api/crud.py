@@ -3,8 +3,7 @@ from logging import getLogger
 
 from sqlalchemy.orm import Session
 
-import models
-import schemas
+from database_api import models, schemas
 
 LOGGER = getLogger(__name__)
 LOGGER.setLevel("INFO")
