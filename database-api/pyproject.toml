@@ -5,6 +5,7 @@ description = "A unique way to see inside ML inference"
 authors = ["Evan Azevedo <evan@azevedo.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [{include = "database_api"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
