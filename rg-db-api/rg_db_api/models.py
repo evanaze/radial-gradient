@@ -1,5 +1,5 @@
 """Database models."""
-from sqlalchemy import Boolean, Column, Integer, String, Identity
+from sqlalchemy import Column, Integer, String, Identity, ForeignKey
 
 from database_api.database import Base
 
@@ -9,6 +9,22 @@ class Post(Base):
 
     __tablename__ = "posts"
     id = Column(Integer, Identity(start=1), primary_key=True, index=True)
-    username = Column(String)
+    author = Column(String)
     content = Column(String)
-    like = Column(Boolean, nullable=True)
+
+
+class User(Base):
+    """The user table."""
+
+    __tablename__ = "users"
+    id = Column(Integer, Identity(start=1), primary_key=True, index=True)
+
+
+class Like(Base):
+    """The likes table."""
+
+    __tablename__ = "likes"
+    id = Column(Integer, Identity(start=1), primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
+    like = Column(Integer, nullable=False)
