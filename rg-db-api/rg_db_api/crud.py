@@ -4,13 +4,22 @@ from sqlalchemy.orm import Session
 from database_api import models, schemas
 
 
-def create_post(db: Session, post: schemas.ContentModel):
+def create_post(db: Session, post: schemas.PostModel):
     """Create a post in the database"""
     db_post = models.Post(**post.dict())
     db.add(db_post)
     db.commit()
     db.refresh(db_post)
     return db_post
+
+
+def create_like(db: Session, like: schemas.LikeModel):
+    """Create a like in the database."""
+    db_like = models.Like(**like.dict())
+    db.add(db_like)
+    db.commit()
+    db.refresh(db_like)
+    return db_like
 
 
 def read_post(db: Session, content_id: str):
@@ -29,4 +38,8 @@ def update_post_like(db: Session, content_id: str, like: schemas.LikeModel):
     :param content_id: The ID of the content to update.
     :param like: The like value to set. Either True or False.
     """
-    return db.query(models.Post).filter(models.Post.id == content_id).update({"like": like.like})
+    return (
+        db.query(models.Post)
+        .filter(models.Post.id == content_id)
+        .update({"like": like.like})
+    )

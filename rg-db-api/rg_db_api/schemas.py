@@ -2,31 +2,31 @@
 from pydantic import BaseModel
 
 
-class UserModel(BaseModel):
+class ResponseModel(BaseModel):
     id: int
+
+
+class UserModel(ResponseModel):
+    class Config:
+        orm_mode = True
 
 
 class LikeModel(BaseModel):
-    id: int
     user_id: int
     post_id: int
-    like: bool | None = None
+    like: int
 
 
-class ResponseModel(LikeModel):
-    """The model of a response from the user."""
+class LikeResponseModel(ResponseModel, LikeModel):
+    class Config:
+        orm_mode = True
 
-    id: str
 
-
-class ContentModel(LikeModel):
+class PostModel(BaseModel):
     username: str
     content: str
 
 
-class PostModel(ContentModel):
-    id: str
-    author: str
-
+class PostResponseModel(PostModel, ResponseModel):
     class Config:
         orm_mode = True
