@@ -1,10 +1,11 @@
 """Simple CRUD operations."""
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from database_api import models, schemas
+from rg_db_api import models, schemas
 
 
-def create_post(db: Session, post: schemas.PostModel):
+def create_post(db: Session, post: schemas.PostModel) -> schemas.PostResponseModel:
     """Create a post in the database"""
     db_post = models.Post(**post.dict())
     db.add(db_post)
@@ -22,24 +23,21 @@ def create_like(db: Session, like: schemas.LikeModel):
     return db_like
 
 
+def read_likes(db: Session) -> list[dict]:
+    """Read all of the likes from the database.
+
+    :param db: The database session.
+    """
+    query = db.query(models.Like)
+    return db.scalars(query).all()
+
+
 def read_post(db: Session, content_id: str):
     """Read a post from the database.
 
     :param db: The database session.
     :param content_id: The post to read from the database.
     """
-    query = db.query(models.Post).filter(models.Post.id == content_id)
-    return db.scalars(query).all()[0]
-
-
-def update_post_like(db: Session, content_id: str, like: schemas.LikeModel):
-    """Update a post with the user's response.
-
-    :param content_id: The ID of the content to update.
-    :param like: The like value to set. Either True or False.
-    """
-    return (
-        db.query(models.Post)
-        .filter(models.Post.id == content_id)
-        .update({"like": like.like})
-    )
+    posts = models.Post
+    query = select(models.Post).where(posts.id == content_id)
+    return db.execute(query).fetchone()

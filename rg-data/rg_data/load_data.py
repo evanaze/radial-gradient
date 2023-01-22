@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 def read_csv():
     """Read the data.csv file."""
-    with open("data.csv", "r") as infile:
+    with open("content.csv", "r") as infile:
         csvreader = csv.reader(infile)
 
         csvdata = []
@@ -20,7 +20,7 @@ def read_csv():
     return csvdata
 
 
-def write_posts_to_db(posts: list[dict], ip_address: str) -> list[int]:
+def write_posts_to_db(posts: list, ip_address: str) -> list:
     """Write the posts to the database.
 
     :param post_ids: A list of posts to generate likes for.
@@ -29,13 +29,19 @@ def write_posts_to_db(posts: list[dict], ip_address: str) -> list[int]:
     ids = []
     for post in posts:
         logging.info("Writing post %s", post)
-        response = requests.post(f"http://{ip_address}:80/create_post", json=post)
+        response = requests.post(f"http://{ip_address}:80/content", json=post)
         id = response.json()["id"]
         ids.append(id)
     return ids
 
 
-def generate_like_data(post_ids: list[int], ip_address: str) -> None:
+def create_user(user_id: int, ip_address: str) -> dict:
+    """Create the user."""
+    user = {"id": user_id}
+    response = requests.post(f"http://{ip_address}:80/user", json=user)
+
+
+def generate_like_data(post_ids: list, ip_address: str) -> None:
     """Randomly generate like data for the content.
 
     :param post_ids: A list of post IDs to generate likes for.
@@ -44,6 +50,7 @@ def generate_like_data(post_ids: list[int], ip_address: str) -> None:
     n_users = 1000
     n_posts = len(post_ids)
     for user in range(n_users):
+        create_user(user, ip_address)
         n_likes = random.randint(1, n_posts)
         for post_id in random.sample(post_ids, n_likes):
             like_data = {
@@ -58,10 +65,10 @@ def generate_like_data(post_ids: list[int], ip_address: str) -> None:
 @click.option(
     "-i", "--ip-address", help="The IP address to send posts to.", required=True
 )
-def load_data_db(ip_address: str):
+def load_data_db(ip_address: str) -> None:
     """Load the data into the database."""
     data = read_csv()
-    posts = [{"username": post[-1], "content": post[2]} for post in data]
+    posts = [{"author": post[-1], "content": post[2]} for post in data]
 
     post_ids = write_posts_to_db(posts, ip_address)
     generate_like_data(post_ids, ip_address)

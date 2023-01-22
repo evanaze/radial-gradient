@@ -1,7 +1,7 @@
 """Database models."""
 from sqlalchemy import Column, Integer, String, Identity, ForeignKey
 
-from database_api.database import Base
+from rg_db_api.database import Base
 
 
 class Post(Base):
@@ -18,6 +18,7 @@ class User(Base):
 
     __tablename__ = "users"
     id = Column(Integer, Identity(start=1), primary_key=True, index=True)
+    username = Column(String)
 
 
 class Like(Base):
