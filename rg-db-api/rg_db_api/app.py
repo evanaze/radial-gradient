@@ -23,13 +23,19 @@ def create_post(post: schemas.PostModel, db: Session = Depends(get_db)):
     return crud.create_post(db, post)
 
 
+@app.post("/user", response_model=schemas.UserModel)
+def create_user(user_id: int, db: Session = Depends(get_db)):
+    """Create a user in the database."""
+    return crud.create_user(db, user_id)
+
+
 @app.post("/like", response_model=schemas.LikeResponseModel)
 def create_like(like: schemas.LikeModel, db: Session = Depends(get_db)):
     """Create a like in the database."""
     return crud.create_like(db, like)
 
 
-@app.get("/like", response_model=schemas.LikeResponseModel)
+@app.get("/like", response_model=list[schemas.LikeResponseModel])
 def read_likes(db: Session = Depends(get_db)):
     """Get all likes in the database."""
     return crud.read_likes(db)

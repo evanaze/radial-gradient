@@ -23,7 +23,7 @@ class LikeResponseModel(ResponseModel, LikeModel):
 
 
 class PostModel(BaseModel):
-    username: str
+    author: str
     content: str
 
 

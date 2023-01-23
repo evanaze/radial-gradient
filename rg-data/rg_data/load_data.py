@@ -15,7 +15,9 @@ def read_csv():
         csvreader = csv.reader(infile)
 
         csvdata = []
-        for line in csvreader:
+        for i, line in enumerate(csvreader):
+            if i == 0:
+                continue
             csvdata.append(line)
     return csvdata
 
@@ -28,17 +30,16 @@ def write_posts_to_db(posts: list, ip_address: str) -> list:
     """
     ids = []
     for post in posts:
-        logging.info("Writing post %s", post)
         response = requests.post(f"http://{ip_address}:80/content", json=post)
         id = response.json()["id"]
         ids.append(id)
     return ids
 
 
-def create_user(user_id: int, ip_address: str) -> dict:
+def create_user(user_id: int, ip_address: str) -> None:
     """Create the user."""
-    user = {"id": user_id}
-    response = requests.post(f"http://{ip_address}:80/user", json=user)
+    user = {"user_id": user_id}
+    requests.post(f"http://{ip_address}:80/user", params=user)
 
 
 def generate_like_data(post_ids: list, ip_address: str) -> None:

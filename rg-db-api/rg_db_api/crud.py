@@ -23,6 +23,15 @@ def create_like(db: Session, like: schemas.LikeModel):
     return db_like
 
 
+def create_user(db: Session, user_id: int):
+    """Create a user in the database."""
+    db_user = models.User(id=user_id)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+
 def read_likes(db: Session) -> list[dict]:
     """Read all of the likes from the database.
 

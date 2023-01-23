@@ -17,8 +17,7 @@ class User(Base):
     """The user table."""
 
     __tablename__ = "users"
-    id = Column(Integer, Identity(start=1), primary_key=True, index=True)
-    username = Column(String)
+    id = Column(Integer, primary_key=True, index=True)
 
 
 class Like(Base):
