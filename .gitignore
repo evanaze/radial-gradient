@@ -161,3 +161,8 @@ cython_debug/
 
 .ruff_cache
 data/data.csv
+
+rg-frontend/node_modules
+ts-frontend/node_modules
+ts-frontend/package-lock.json
+.idea
