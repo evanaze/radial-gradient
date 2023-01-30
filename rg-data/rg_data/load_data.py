@@ -64,7 +64,7 @@ def generate_like_data(post_ids: list, ip_address: str) -> None:
 
 @click.command()
 @click.option(
-    "-i", "--ip-address", help="The IP address to send posts to.", required=True
+    "-i", "--ip-address", help="The IP address to send posts to.", default="localhost"
 )
 def load_data_db(ip_address: str) -> None:
     """Load the data into the database."""
